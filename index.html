@@ -1,78 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Loading...</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<style>
-body{
-    margin:0;
-    background:black;
-    color:white;
-    font-family:Arial;
-    text-align:center;
-    overflow:hidden;
-}
-
-#msg{
-    margin-top:150px;
-    font-size:28px;
-}
-
-#scare{
-    display:none;
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:black;
-}
-
-#scare img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-</style>
+    <title>Create Customer Table</title>
 </head>
-
 <body>
 
-<div id="msg">Loading Dark Web Access...</div>
+<h2>Create Customer Table and Insert Records</h2>
 
-<div id="scare">
-<img src="https://i.imgur.com/ZQZSWrt.jpg">
-</div>
+<?php
 
-<audio id="sound">
-<source src="https://www.soundjay.com/human/scream-01.mp3">
-</audio>
+$conn = mysqli_connect("localhost","root","","test");
 
-<script>
+if(!$conn)
+{
+    die("Connection Failed : " . mysqli_connect_error());
+}
 
-setTimeout(()=>{
-    document.getElementById("msg").innerHTML="Accessing Private Files..."
-},2000)
+// Create Table
+$sql = "CREATE TABLE IF NOT EXISTS customer(
+cust_no INT PRIMARY KEY,
+cust_name VARCHAR(50),
+item_purchased VARCHAR(50),
+mob_no VARCHAR(15)
+)";
 
-setTimeout(()=>{
-    document.getElementById("msg").innerHTML="WARNING !!!"
-},4000)
+if(mysqli_query($conn,$sql))
+{
+    echo "Customer Table Created Successfully<br>";
+}
+else
+{
+    echo "Error Creating Table<br>";
+}
 
-setTimeout(()=>{
-    document.getElementById("scare").style.display="block"
-    document.getElementById("sound").play()
-    document.body.style.background="white"
-},6000)
+// Insert Records
+$insert = "INSERT INTO customer (cust_no,cust_name,item_purchased,mob_no) VALUES
+(1,'Rahul','Mobile','9000000001'),
+(2,'Amit','Laptop','9000000002'),
+(3,'Riya','Shoes','9000000003'),
+(4,'Neha','Watch','9000000004'),
+(5,'Karan','Bag','9000000005'),
+(6,'Priya','Tablet','9000000006'),
+(7,'Vikas','Camera','9000000007'),
+(8,'Anjali','Headphone','9000000008'),
+(9,'Rohit','Keyboard','9000000009'),
+(10,'Sneha','Mouse','9000000010')";
 
-setTimeout(()=>{
-    document.getElementById("scare").style.display="none"
-    document.body.style.background="black"
-    document.body.innerHTML="<h1 style='color:red;margin-top:200px'>😂 PRANK HO GAYA 😂</h1>"
-},9000)
+if(mysqli_query($conn,$insert))
+{
+    echo "10 Records Inserted Successfully";
+}
+else
+{
+    echo "Error Inserting Records (Maybe Already Inserted)";
+}
 
-</script>
+?>
 
 </body>
 </html>
