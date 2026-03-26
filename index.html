@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Security Breach</title>
+<title>Loading...</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -9,142 +9,68 @@
 body{
     margin:0;
     background:black;
-    color:#00ff00;
-    font-family:monospace;
+    color:white;
+    font-family:Arial;
+    text-align:center;
     overflow:hidden;
 }
 
-#start{
-    text-align:center;
-    margin-top:120px;
-}
-
-button{
-    padding:15px 30px;
-    font-size:20px;
-    background:red;
-    color:white;
-    border:none;
-    border-radius:8px;
-}
-
-#terminal{
-    padding:20px;
-    font-size:18px;
-    white-space:pre-line;
-}
-
-.progress{
-    width:80%;
-    height:25px;
-    border:2px solid lime;
-    margin:20px;
-}
-
-.bar{
-    height:100%;
-    width:0%;
-    background:lime;
-}
-
-.glitch{
-    animation:shake 0.15s infinite;
-}
-
-@keyframes shake{
-    0%{transform:translate(2px,2px);}
-    25%{transform:translate(-2px,2px);}
-    50%{transform:translate(2px,-2px);}
-    75%{transform:translate(-2px,-2px);}
-    100%{transform:translate(2px,2px);}
-}
-
-.red{
-    color:red;
+#msg{
+    margin-top:150px;
     font-size:28px;
-    text-align:center;
-    margin-top:50px;
+}
+
+#scare{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:black;
+}
+
+#scare img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 </style>
 </head>
 
 <body>
 
-<div id="start">
-<h1>⚠ Device Security Check Required</h1>
-<button onclick="startHack()">Start Scan</button>
+<div id="msg">Loading Dark Web Access...</div>
+
+<div id="scare">
+<img src="https://i.imgur.com/ZQZSWrt.jpg">
 </div>
 
-<div id="terminal"></div>
-
-<div class="progress" id="prog" style="display:none">
-<div class="bar" id="bar"></div>
-</div>
-
-<audio id="beep">
-<source src="https://www.soundjay.com/button/beep-07.wav">
+<audio id="sound">
+<source src="https://www.soundjay.com/human/scream-01.mp3">
 </audio>
 
 <script>
 
-function startHack(){
+setTimeout(()=>{
+    document.getElementById("msg").innerHTML="Accessing Private Files..."
+},2000)
 
-document.body.requestFullscreen()
+setTimeout(()=>{
+    document.getElementById("msg").innerHTML="WARNING !!!"
+},4000)
 
-document.getElementById("start").style.display="none"
-document.getElementById("prog").style.display="block"
+setTimeout(()=>{
+    document.getElementById("scare").style.display="block"
+    document.getElementById("sound").play()
+    document.body.style.background="white"
+},6000)
 
-let term = document.getElementById("terminal")
-
-let lines = [
-"Initializing Secure Connection...",
-"Scanning Device Storage...",
-"Contacts Data Extracted...",
-"Camera Access Granted...",
-"Uploading Files To Remote Server...",
-"Installing Tracking Malware...",
-"Encrypting Device..."
-]
-
-let i = 0
-
-let typing = setInterval(()=>{
-    if(i < lines.length){
-        term.innerHTML += "> " + lines[i] + "\n"
-        document.getElementById("beep").play()
-        document.body.classList.add("glitch")
-        setTimeout(()=>{document.body.classList.remove("glitch")},300)
-        i++
-    }
-},1500)
-
-let bar = document.getElementById("bar")
-let width = 0
-
-let load = setInterval(()=>{
-    if(width >= 100){
-        clearInterval(load)
-        clearInterval(typing)
-
-        let count = 5
-        let timer = setInterval(()=>{
-            term.innerHTML += "\nDEVICE LOCK IN " + count
-            count--
-
-            if(count < 0){
-                clearInterval(timer)
-                term.innerHTML += "\n\n😂 PRANK HO GAYA 😂"
-                term.className="red"
-            }
-        },1000)
-
-    }else{
-        width++
-        bar.style.width = width + "%"
-    }
-},120)
-
-}
+setTimeout(()=>{
+    document.getElementById("scare").style.display="none"
+    document.body.style.background="black"
+    document.body.innerHTML="<h1 style='color:red;margin-top:200px'>😂 PRANK HO GAYA 😂</h1>"
+},9000)
 
 </script>
 
