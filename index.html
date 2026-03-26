@@ -1,112 +1,97 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Important Update</title>
+<title>System Security Scan</title>
 
 <style>
 body{
     margin:0;
     background:black;
-    color:lime;
+    color:#00ff00;
     font-family:monospace;
+}
+
+#terminal{
+    padding:20px;
+    font-size:18px;
+    white-space:pre-line;
+}
+
+.progress{
+    width:80%;
+    height:25px;
+    border:2px solid lime;
+    margin:20px;
+}
+
+.bar{
+    height:100%;
+    width:0%;
+    background:lime;
+}
+
+.center{
     text-align:center;
-    overflow:hidden;
-}
-
-#main{
-    margin-top:120px;
-}
-
-button{
-    padding:15px 30px;
-    font-size:20px;
-    background:red;
-    color:white;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-}
-
-#hack{
-    display:none;
-    font-size:22px;
-    margin-top:50px;
-}
-
-.shake{
-    animation:shake 0.2s infinite;
-}
-
-@keyframes shake{
-    0%{transform:translate(5px,5px);}
-    25%{transform:translate(-5px,5px);}
-    50%{transform:translate(5px,-5px);}
-    75%{transform:translate(-5px,-5px);}
-    100%{transform:translate(5px,5px);}
+    margin-top:100px;
 }
 </style>
 </head>
 
 <body>
 
-<div id="main">
-    <h1>⚠️ System Update Required</h1>
-    <p>Click below to continue</p>
-    <button onclick="startPrank()">Continue</button>
+<div class="center" id="start">
+    <h1>⚠️ Security Verification Required</h1>
+    <button onclick="startHack()" style="padding:15px;font-size:20px">Verify</button>
 </div>
 
-<div id="hack">
-    <h1>⚠️ HACKING STARTED ⚠️</h1>
-    <p id="text"></p>
-    <h2 id="count"></h2>
-</div>
+<div id="terminal"></div>
 
-<audio id="sound">
-    <source src="https://www.soundjay.com/button/beep-07.wav">
-</audio>
+<div class="progress" id="prog" style="display:none">
+    <div class="bar" id="bar"></div>
+</div>
 
 <script>
 
-function startPrank(){
+function startHack(){
 
-    document.body.classList.add("shake")
+document.getElementById("start").style.display="none"
+document.getElementById("prog").style.display="block"
 
-    document.getElementById("main").style.display="none"
-    document.getElementById("hack").style.display="block"
+let text = [
+"Connecting to Dark Server...",
+"Bypassing Firewall...",
+"Accessing Photos...",
+"Accessing WhatsApp Chats...",
+"Uploading Personal Data...",
+"Installing Spyware...",
+"Finalizing Hack..."
+]
 
-    let messages = [
-        "Accessing Contacts...",
-        "Uploading Photos...",
-        "Sending Data to Server...",
-        "Installing Virus...",
-        "Deleting System Files..."
-    ]
+let i = 0
+let term = document.getElementById("terminal")
 
-    let i = 0
+let typing = setInterval(()=>{
+    if(i < text.length){
+        term.innerHTML += "> " + text[i] + "\n"
+        i++
+    }
+},1000)
 
-    let msgInterval = setInterval(()=>{
-        if(i < messages.length){
-            document.getElementById("text").innerHTML = messages[i]
-            document.getElementById("sound").play()
-            i++
-        }else{
-            clearInterval(msgInterval)
-        }
-    },1500)
+let width = 0
+let bar = document.getElementById("bar")
 
-    let time = 5
-    let countInterval = setInterval(()=>{
-        document.getElementById("count").innerHTML = 
-        "Phone Locking in " + time + " seconds"
-        time--
+let load = setInterval(()=>{
+    if(width >= 100){
+        clearInterval(load)
+        clearInterval(typing)
+        term.innerHTML += "\n\n😂 PRANK HO GAYA 😂"
+        term.style.color="red"
+    }else{
+        width++
+        bar.style.width = width + "%"
+    }
+},120)
 
-        if(time < 0){
-            clearInterval(countInterval)
-            document.body.classList.remove("shake")
-            document.getElementById("hack").innerHTML =
-            "<h1 style='color:red'>😂 MAZA AYA  😂</h1>"
-        }
-    },1000)
 }
 
 </script>
