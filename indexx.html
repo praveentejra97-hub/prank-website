@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>System Security Scan</title>
+
+<style>
+body{
+    margin:0;
+    background:black;
+    color:#00ff00;
+    font-family:monospace;
+}
+
+#terminal{
+    padding:20px;
+    font-size:18px;
+    white-space:pre-line;
+}
+
+.progress{
+    width:80%;
+    height:25px;
+    border:2px solid lime;
+    margin:20px;
+}
+
+.bar{
+    height:100%;
+    width:0%;
+    background:lime;
+}
+
+.center{
+    text-align:center;
+    margin-top:100px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="center" id="start">
+    <h1>⚠️ Security Verification Required</h1>
+    <button onclick="startHack()" style="padding:15px;font-size:20px">Verify</button>
+</div>
+
+<div id="terminal"></div>
+
+<div class="progress" id="prog" style="display:none">
+    <div class="bar" id="bar"></div>
+</div>
+
+<script>
+
+function startHack(){
+
+document.getElementById("start").style.display="none"
+document.getElementById("prog").style.display="block"
+
+let text = [
+"Connecting to Dark Server...",
+"Bypassing Firewall...",
+"Accessing Photos...",
+"Accessing WhatsApp Chats...",
+"Uploading Personal Data...",
+"Installing Spyware...",
+"Finalizing Hack..."
+]
+
+let i = 0
+let term = document.getElementById("terminal")
+
+let typing = setInterval(()=>{
+    if(i < text.length){
+        term.innerHTML += "> " + text[i] + "\n"
+        i++
+    }
+},1000)
+
+let width = 0
+let bar = document.getElementById("bar")
+
+let load = setInterval(()=>{
+    if(width >= 100){
+        clearInterval(load)
+        clearInterval(typing)
+        term.innerHTML += "\n\n😂 PRANK HO GAYA 😂"
+        term.style.color="red"
+    }else{
+        width++
+        bar.style.width = width + "%"
+    }
+},120)
+
+}
+
+</script>
+
+</body>
+</html>
