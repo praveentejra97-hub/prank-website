@@ -1,61 +1,186 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Create Customer Table</title>
+<title>System Security</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+margin:0;
+background:black;
+color:#00ff00;
+font-family:monospace;
+overflow:hidden;
+}
+
+.center{
+text-align:center;
+margin-top:120px;
+}
+
+button{
+padding:15px 30px;
+font-size:20px;
+background:red;
+color:white;
+border:none;
+border-radius:10px;
+}
+
+#terminal{
+padding:20px;
+font-size:18px;
+white-space:pre-line;
+}
+
+.progress{
+width:80%;
+height:25px;
+border:2px solid lime;
+margin:20px;
+}
+
+.bar{
+height:100%;
+width:0%;
+background:lime;
+}
+
+.popup{
+position:fixed;
+top:30%;
+left:30%;
+width:40%;
+background:#111;
+border:2px solid red;
+padding:20px;
+display:none;
+color:white;
+text-align:center;
+}
+
+.glitch{
+animation:shake 0.1s infinite;
+}
+
+@keyframes shake{
+0%{transform:translate(3px,3px);}
+25%{transform:translate(-3px,3px);}
+50%{transform:translate(3px,-3px);}
+75%{transform:translate(-3px,-3px);}
+100%{transform:translate(3px,3px);}
+}
+
+#camera{
+position:fixed;
+bottom:10px;
+right:10px;
+width:200px;
+height:150px;
+border:3px solid red;
+display:none;
+background:black;
+color:red;
+font-size:14px;
+text-align:center;
+}
+
+.red{
+color:red;
+font-size:30px;
+text-align:center;
+margin-top:100px;
+}
+</style>
 </head>
+
 <body>
 
-<h2>Create Customer Table and Insert Records</h2>
+<div class="center" id="start">
+<h1>⚠ Security Scan Required</h1>
+<button onclick="startPrank()">Start Scan</button>
+</div>
 
-<?php
+<div id="terminal"></div>
 
-$conn = mysqli_connect("localhost","root","","test");
+<div class="progress" id="prog" style="display:none">
+<div class="bar" id="bar"></div>
+</div>
 
-if(!$conn)
-{
-    die("Connection Failed : " . mysqli_connect_error());
+<div class="popup" id="popup">⚠ Virus Found !!!</div>
+
+<div id="camera">📷 Camera Recording...</div>
+
+<audio id="beep">
+<source src="https://www.soundjay.com/button/beep-07.wav">
+</audio>
+
+<script>
+
+function startPrank(){
+
+document.body.requestFullscreen()
+
+document.getElementById("start").style.display="none"
+document.getElementById("prog").style.display="block"
+
+let term = document.getElementById("terminal")
+
+let lines = [
+"Connecting to Secure Server...",
+"Scanning Internal Storage...",
+"Extracting Contacts...",
+"Reading WhatsApp Database...",
+"Uploading Photos...",
+"Injecting Malware Scripts...",
+"Granting Remote Access...",
+"Activating Front Camera...",
+"Encrypting Device..."
+]
+
+let i=0
+
+let typing = setInterval(()=>{
+if(i<lines.length){
+term.innerHTML += "> " + lines[i] + "\n"
+document.getElementById("beep").play()
+document.body.classList.add("glitch")
+setTimeout(()=>{document.body.classList.remove("glitch")},300)
+i++
+}
+},1500)
+
+let width=0
+let bar=document.getElementById("bar")
+
+let load = setInterval(()=>{
+if(width>=100){
+clearInterval(load)
+clearInterval(typing)
+
+document.getElementById("popup").style.display="block"
+document.getElementById("camera").style.display="block"
+
+let count=5
+let timer=setInterval(()=>{
+term.innerHTML += "\nDEVICE LOCK IN "+count
+count--
+
+if(count<0){
+clearInterval(timer)
+document.body.innerHTML="<h1 class='red'>😂 PRANK HO GAYA 😂</h1>"
+}
+},1000)
+
+}else{
+width++
+bar.style.width=width+"%"
+}
+},120)
+
 }
 
-// Create Table
-$sql = "CREATE TABLE IF NOT EXISTS customer(
-cust_no INT PRIMARY KEY,
-cust_name VARCHAR(50),
-item_purchased VARCHAR(50),
-mob_no VARCHAR(15)
-)";
-
-if(mysqli_query($conn,$sql))
-{
-    echo "Customer Table Created Successfully<br>";
-}
-else
-{
-    echo "Error Creating Table<br>";
-}
-
-// Insert Records
-$insert = "INSERT INTO customer (cust_no,cust_name,item_purchased,mob_no) VALUES
-(1,'Rahul','Mobile','9000000001'),
-(2,'Amit','Laptop','9000000002'),
-(3,'Riya','Shoes','9000000003'),
-(4,'Neha','Watch','9000000004'),
-(5,'Karan','Bag','9000000005'),
-(6,'Priya','Tablet','9000000006'),
-(7,'Vikas','Camera','9000000007'),
-(8,'Anjali','Headphone','9000000008'),
-(9,'Rohit','Keyboard','9000000009'),
-(10,'Sneha','Mouse','9000000010')";
-
-if(mysqli_query($conn,$insert))
-{
-    echo "10 Records Inserted Successfully";
-}
-else
-{
-    echo "Error Inserting Records (Maybe Already Inserted)";
-}
-
-?>
+</script>
 
 </body>
 </html>
