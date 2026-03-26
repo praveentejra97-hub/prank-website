@@ -1,183 +1,149 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>System Security</title>
+<title>Library Management</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body{
+font-family:Arial;
 margin:0;
-background:black;
-color:#00ff00;
-font-family:monospace;
-overflow:hidden;
+background:#f4f4f4;
 }
 
-.center{
+header{
+background:#2c3e50;
+color:white;
+padding:15px;
 text-align:center;
-margin-top:120px;
+}
+
+.container{
+padding:20px;
+}
+
+input,button{
+padding:10px;
+margin:5px;
 }
 
 button{
-padding:15px 30px;
-font-size:20px;
-background:red;
+background:#2c3e50;
 color:white;
 border:none;
-border-radius:10px;
+cursor:pointer;
 }
 
-#terminal{
-padding:20px;
-font-size:18px;
-white-space:pre-line;
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+background:white;
 }
 
-.progress{
-width:80%;
-height:25px;
-border:2px solid lime;
-margin:20px;
+th,td{
+border:1px solid #ddd;
+padding:10px;
+text-align:center;
 }
 
-.bar{
-height:100%;
-width:0%;
-background:lime;
-}
-
-.popup{
-position:fixed;
-top:30%;
-left:30%;
-width:40%;
-background:#111;
-border:2px solid red;
-padding:20px;
+#dashboard{
 display:none;
-color:white;
+}
+
+.logout{
+float:right;
+background:red;
+}
+
+.loginBox{
+width:300px;
+margin:120px auto;
+background:white;
+padding:20px;
 text-align:center;
-}
-
-.glitch{
-animation:shake 0.1s infinite;
-}
-
-@keyframes shake{
-0%{transform:translate(3px,3px);}
-25%{transform:translate(-3px,3px);}
-50%{transform:translate(3px,-3px);}
-75%{transform:translate(-3px,-3px);}
-100%{transform:translate(3px,3px);}
-}
-
-#camera{
-position:fixed;
-bottom:10px;
-right:10px;
-width:200px;
-height:150px;
-border:3px solid red;
-display:none;
-background:black;
-color:red;
-font-size:14px;
-text-align:center;
-}
-
-.red{
-color:red;
-font-size:30px;
-text-align:center;
-margin-top:100px;
+box-shadow:0 0 10px gray;
 }
 </style>
 </head>
 
 <body>
 
-<div class="center" id="start">
-<h1>⚠ Security Scan Required</h1>
-<button onclick="startPrank()">Start Scan</button>
+<header>
+Library Management System
+<button class="logout" onclick="logout()">Logout</button>
+</header>
+
+<div id="loginPage" class="loginBox">
+<h2>Login</h2>
+<input type="text" id="user" placeholder="Username"><br>
+<input type="password" id="pass" placeholder="Password"><br>
+<button onclick="login()">Login</button>
+<p id="msg" style="color:red"></p>
 </div>
 
-<div id="terminal"></div>
+<div id="dashboard" class="container">
 
-<div class="progress" id="prog" style="display:none">
-<div class="bar" id="bar"></div>
+<h2>Add Book</h2>
+<input type="text" id="bookName" placeholder="Book Name">
+<button onclick="addBook()">Add</button>
+
+<h2>Book List</h2>
+<table id="table">
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</table>
+
 </div>
-
-<div class="popup" id="popup">⚠ Virus Found !!!</div>
-
-<div id="camera">📷 Camera Recording...</div>
-
-<audio id="beep">
-<source src="https://www.soundjay.com/button/beep-07.wav">
-</audio>
 
 <script>
 
-function startPrank(){
+let id=1
 
-document.body.requestFullscreen()
+function login(){
+let u=document.getElementById("user").value
+let p=document.getElementById("pass").value
 
-document.getElementById("start").style.display="none"
-document.getElementById("prog").style.display="block"
-
-let term = document.getElementById("terminal")
-
-let lines = [
-"Connecting to Secure Server...",
-"Scanning Internal Storage...",
-"Extracting Contacts...",
-"Reading WhatsApp Database...",
-"Uploading Photos...",
-"Injecting Malware Scripts...",
-"Granting Remote Access...",
-"Activating Front Camera...",
-"Encrypting Device..."
-]
-
-let i=0
-
-let typing = setInterval(()=>{
-if(i<lines.length){
-term.innerHTML += "> " + lines[i] + "\n"
-document.getElementById("beep").play()
-document.body.classList.add("glitch")
-setTimeout(()=>{document.body.classList.remove("glitch")},300)
-i++
-}
-},1500)
-
-let width=0
-let bar=document.getElementById("bar")
-
-let load = setInterval(()=>{
-if(width>=100){
-clearInterval(load)
-clearInterval(typing)
-
-document.getElementById("popup").style.display="block"
-document.getElementById("camera").style.display="block"
-
-let count=5
-let timer=setInterval(()=>{
-term.innerHTML += "\nDEVICE LOCK IN "+count
-count--
-
-if(count<0){
-clearInterval(timer)
-document.body.innerHTML="<h1 class='red'>😂 PRANK HO GAYA 😂</h1>"
-}
-},1000)
-
+if(u=="admin" && p=="1234"){
+document.getElementById("loginPage").style.display="none"
+document.getElementById("dashboard").style.display="block"
 }else{
-width++
-bar.style.width=width+"%"
+document.getElementById("msg").innerHTML="Wrong Login"
 }
-},120)
+}
 
+function logout(){
+location.reload()
+}
+
+function addBook(){
+let name=document.getElementById("bookName").value
+
+if(name=="") return
+
+let table=document.getElementById("table")
+
+let row=table.insertRow()
+
+row.insertCell(0).innerHTML=id++
+row.insertCell(1).innerHTML=name
+row.insertCell(2).innerHTML="Available"
+row.insertCell(3).innerHTML=
+"<button onclick='issue(this)'>Issue</button> <button onclick='removeBook(this)'>Delete</button>"
+
+}
+
+function issue(btn){
+let row=btn.parentNode.parentNode
+row.cells[2].innerHTML="Issued"
+}
+
+function removeBook(btn){
+btn.parentNode.parentNode.remove()
 }
 
 </script>
