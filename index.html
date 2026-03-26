@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Important Update</title>
+
+<style>
+body{
+    margin:0;
+    background:black;
+    color:lime;
+    font-family:monospace;
+    text-align:center;
+    overflow:hidden;
+}
+
+#main{
+    margin-top:120px;
+}
+
+button{
+    padding:15px 30px;
+    font-size:20px;
+    background:red;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+#hack{
+    display:none;
+    font-size:22px;
+    margin-top:50px;
+}
+
+.shake{
+    animation:shake 0.2s infinite;
+}
+
+@keyframes shake{
+    0%{transform:translate(5px,5px);}
+    25%{transform:translate(-5px,5px);}
+    50%{transform:translate(5px,-5px);}
+    75%{transform:translate(-5px,-5px);}
+    100%{transform:translate(5px,5px);}
+}
+</style>
+</head>
+
+<body>
+
+<div id="main">
+    <h1>⚠️ System Update Required</h1>
+    <p>Click below to continue</p>
+    <button onclick="startPrank()">Continue</button>
+</div>
+
+<div id="hack">
+    <h1>⚠️ HACKING STARTED ⚠️</h1>
+    <p id="text"></p>
+    <h2 id="count"></h2>
+</div>
+
+<audio id="sound">
+    <source src="https://www.soundjay.com/button/beep-07.wav">
+</audio>
+
+<script>
+
+function startPrank(){
+
+    document.body.classList.add("shake")
+
+    document.getElementById("main").style.display="none"
+    document.getElementById("hack").style.display="block"
+
+    let messages = [
+        "Accessing Contacts...",
+        "Uploading Photos...",
+        "Sending Data to Server...",
+        "Installing Virus...",
+        "Deleting System Files..."
+    ]
+
+    let i = 0
+
+    let msgInterval = setInterval(()=>{
+        if(i < messages.length){
+            document.getElementById("text").innerHTML = messages[i]
+            document.getElementById("sound").play()
+            i++
+        }else{
+            clearInterval(msgInterval)
+        }
+    },1500)
+
+    let time = 5
+    let countInterval = setInterval(()=>{
+        document.getElementById("count").innerHTML = 
+        "Phone Locking in " + time + " seconds"
+        time--
+
+        if(time < 0){
+            clearInterval(countInterval)
+            document.body.classList.remove("shake")
+            document.getElementById("hack").innerHTML =
+            "<h1 style='color:red'>😂 MAZA AYA  😂</h1>"
+        }
+    },1000)
+}
+
+</script>
+
+</body>
+</html>
