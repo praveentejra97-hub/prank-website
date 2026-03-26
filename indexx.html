@@ -1,97 +1,149 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>System Security Scan</title>
+<title>Library Management</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body{
-    margin:0;
-    background:black;
-    color:#00ff00;
-    font-family:monospace;
+font-family:Arial;
+margin:0;
+background:#f4f4f4;
 }
 
-#terminal{
-    padding:20px;
-    font-size:18px;
-    white-space:pre-line;
+header{
+background:#2c3e50;
+color:white;
+padding:15px;
+text-align:center;
 }
 
-.progress{
-    width:80%;
-    height:25px;
-    border:2px solid lime;
-    margin:20px;
+.container{
+padding:20px;
 }
 
-.bar{
-    height:100%;
-    width:0%;
-    background:lime;
+input,button{
+padding:10px;
+margin:5px;
 }
 
-.center{
-    text-align:center;
-    margin-top:100px;
+button{
+background:#2c3e50;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+background:white;
+}
+
+th,td{
+border:1px solid #ddd;
+padding:10px;
+text-align:center;
+}
+
+#dashboard{
+display:none;
+}
+
+.logout{
+float:right;
+background:red;
+}
+
+.loginBox{
+width:300px;
+margin:120px auto;
+background:white;
+padding:20px;
+text-align:center;
+box-shadow:0 0 10px gray;
 }
 </style>
 </head>
 
 <body>
 
-<div class="center" id="start">
-    <h1>⚠️ Security Verification Required</h1>
-    <button onclick="startHack()" style="padding:15px;font-size:20px">Verify</button>
+<header>
+Library Management System
+<button class="logout" onclick="logout()">Logout</button>
+</header>
+
+<div id="loginPage" class="loginBox">
+<h2>Login</h2>
+<input type="text" id="user" placeholder="Username"><br>
+<input type="password" id="pass" placeholder="Password"><br>
+<button onclick="login()">Login</button>
+<p id="msg" style="color:red"></p>
 </div>
 
-<div id="terminal"></div>
+<div id="dashboard" class="container">
 
-<div class="progress" id="prog" style="display:none">
-    <div class="bar" id="bar"></div>
+<h2>Add Book</h2>
+<input type="text" id="bookName" placeholder="Book Name">
+<button onclick="addBook()">Add</button>
+
+<h2>Book List</h2>
+<table id="table">
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</table>
+
 </div>
 
 <script>
 
-function startHack(){
+let id=1
 
-document.getElementById("start").style.display="none"
-document.getElementById("prog").style.display="block"
+function login(){
+let u=document.getElementById("user").value
+let p=document.getElementById("pass").value
 
-let text = [
-"Connecting to Dark Server...",
-"Bypassing Firewall...",
-"Accessing Photos...",
-"Accessing WhatsApp Chats...",
-"Uploading Personal Data...",
-"Installing Spyware...",
-"Finalizing Hack..."
-]
+if(u=="admin" && p=="1234"){
+document.getElementById("loginPage").style.display="none"
+document.getElementById("dashboard").style.display="block"
+}else{
+document.getElementById("msg").innerHTML="Wrong Login"
+}
+}
 
-let i = 0
-let term = document.getElementById("terminal")
+function logout(){
+location.reload()
+}
 
-let typing = setInterval(()=>{
-    if(i < text.length){
-        term.innerHTML += "> " + text[i] + "\n"
-        i++
-    }
-},1000)
+function addBook(){
+let name=document.getElementById("bookName").value
 
-let width = 0
-let bar = document.getElementById("bar")
+if(name=="") return
 
-let load = setInterval(()=>{
-    if(width >= 100){
-        clearInterval(load)
-        clearInterval(typing)
-        term.innerHTML += "\n\n😂 PRANK HO GAYA 😂"
-        term.style.color="red"
-    }else{
-        width++
-        bar.style.width = width + "%"
-    }
-},120)
+let table=document.getElementById("table")
 
+let row=table.insertRow()
+
+row.insertCell(0).innerHTML=id++
+row.insertCell(1).innerHTML=name
+row.insertCell(2).innerHTML="Available"
+row.insertCell(3).innerHTML=
+"<button onclick='issue(this)'>Issue</button> <button onclick='removeBook(this)'>Delete</button>"
+
+}
+
+function issue(btn){
+let row=btn.parentNode.parentNode
+row.cells[2].innerHTML="Issued"
+}
+
+function removeBook(btn){
+btn.parentNode.parentNode.remove()
 }
 
 </script>
